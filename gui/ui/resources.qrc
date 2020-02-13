@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="Images">
+    <file>icon.jpg</file>
+    <file>grid</file>
+  </qresource>
+</RCC>
