@@ -30,25 +30,25 @@ bool blinkState = false;
 
 void setup() {
   Wire.begin();
-  Serial.begin(38400);
+  //Serial.begin(38400);
   
   nh.initNode();
   nh.advertise(imu);
 
   // initialize device
-  Serial.println("Initializing I2C devices...");
+  //Serial.println("Initializing I2C devices...");
   imm.setClockSource(MPU6050_CLOCK_PLL_XGYRO);
   imm.setFullScaleGyroRange(0);
   imm.setFullScaleAccelRange(0);
   imm.setSleepEnabled(false);
 
   // verify connection
-  Serial.println("Testing device connections...");
-  Serial.println(imm.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+  //Serial.println("Testing device connections...");
+  //Serial.println(imm.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
 
   // setup imu
   imm.CalibrateGyro(15);
-  //imm.CalibrateAccel(15);
+  imm.CalibrateAccel(15);
 
   // configure Arduino LED pin for output
   pinMode(LED_PIN, OUTPUT);
@@ -61,13 +61,10 @@ void loop() {
   float dt = current_time - last_time;
   angleYaw +=   GyZ * (250 / 32767.0) * (dt/1000000.0);
   int yaw = (((int)angleYaw + 180) % 360 ) - 180;
-  Serial.print(angleYaw);
-  Serial.print(",");
-  Serial.println(yaw); 
   delay(1);
   
-  mapAcc();
-  mapGyro();
+  //mapAcc();
+  //  mapGyro();
 
   String AX = String(AcX);
   String AY = String(AcY);

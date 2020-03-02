@@ -1,0 +1,18 @@
+<launch>
+
+ <!-- joy to python node -->
+  <node respawn="true" pkg="joy"
+        type="joy_node" name="joy_python" >
+    <param name="dev" type="string" value="/dev/input/js0" />
+    <param name="deadzone" value="0.12" />
+  </node>
+
+ 
+
+ <!-- python to arduino node -->
+  <node respawn="true" pkg="joystick"
+        type="joy.py" name="joy_arduino" >
+  </node>
+
+
+</launch>

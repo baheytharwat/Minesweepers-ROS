@@ -14,8 +14,18 @@ def callback(imu):
 	GY = float(imu.data[imu.data.index("E")+1:imu.data.index("F")])
 	GZ = float(imu.data[imu.data.index("F")+1:imu.data.index("G")])
 	Y = float(imu.data[imu.data.index("G")+1:imu.data.index("H")])
-	Y = Y * 3.14 / 180.0
-	print(Y,AX,GX)
+	
+	g = 9.81
+	pi = 3.14
+	AX = AX * (2*g / 32767.0 )
+	AY = AY * (2*g / 32767.0 )
+	AZ = AZ * (2*g / 32767.0 )
+	GX = GX * ( 250 / 32767.0)
+	GY = GY * ( 250 / 32767.0)
+	GZ = GZ * ( 250 / 32767.0)
+	Y = Y * pi / 180.0
+	#print(Y,AX,GZ)
+	#print(AX)
 
 	msg = Imu()
 	current_time = rospy.Time.now()
@@ -68,8 +78,8 @@ def mainFn():
 
 	rospy.init_node('listener', anonymous=True)
 	rospy.Subscriber("imu", String, callback)
-	pub = rospy.Publisher('chatter', String, queue_size=10)
-	rate = rospy.Rate(10)
+	#pub = rospy.Publisher('chatter', String, queue_size=10)
+	#rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
 
     	# spin() simply keeps python from exiting until this node is stopped
