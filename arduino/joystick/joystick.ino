@@ -24,13 +24,19 @@ Timer myTimer;
 
 #define encoder_l_a 3
 #define encoder_l_b 2
-
+#define PULSES_PER_ROTATION 2430
+#define R 0.07
 
 std_msgs::String odom_msg;
 
 long counterR = 0;
 long counterL = 0;
-
+long lastReadingL = 0;
+long lastReadingR=0;
+double rpmL=0;
+double rpmR=0;
+double Vr=0.0;
+double Vl=0.0;
 
 int buttons[12] = {0};
 int axes[6] = {0};
@@ -206,9 +212,16 @@ void encoderLPinChangeB()
 
 void publishOdom() {
 
-
-
-  String data = "R" + String(counterR) + "L" + String(counterL);
+  rpmR = (counterR - lastReadingR) * 1000.0/PERIOD;  // no division on period because time=1s
+  rpmR=rpmR/PULSES_PER_ROTATION;
+  Vr = rpmR * (2 * PI * R) / 60;   //velocity in m/s
+    lastReadingR = counterR;
+  rpmL = (counterL - lastReadingL) * 1000.0/PERIOD; // no divisin on period becayse time=1s
+ rpmL=rpmL/PULSES_PER_ROTATION;
+  Vl=rpm2* (2 * PI * R) / 60;    //velocity in m/s
+lastReadingL=counterL;
+  
+  String data = "R" + String(counterR) + "L" + String(counterL)+"X"+String(Vr)+"Y"+String(Vl);
   char data_final[15];
   data.toCharArray(data_final, 15);
   odom_msg.data = data_final;
