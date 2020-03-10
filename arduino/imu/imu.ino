@@ -14,7 +14,7 @@
 MPU6050 imm;
 
 std_msgs::String imu_msg;
-ros::Publisher imu("imu", &imu_msg);
+ros::Publisher imu("sendImu", &imu_msg);
 ros::NodeHandle nh;
 
 

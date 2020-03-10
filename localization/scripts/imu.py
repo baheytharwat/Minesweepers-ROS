@@ -77,7 +77,7 @@ def mainFn():
     # run simultaneously.
 
 	rospy.init_node('listener', anonymous=True)
-	rospy.Subscriber("imu", String, callback)
+	rospy.Subscriber("sendImu", String, callback)
 	#pub = rospy.Publisher('chatter', String, queue_size=10)
 	#rate = rospy.Rate(10)
 	while not rospy.is_shutdown():
